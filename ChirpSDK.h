@@ -45,7 +45,7 @@ namespace chirp
 
         ChirpSDKError Init(string key, string secret);
         ChirpSDKError SetConfig(string config);
-        ChirpSDKError SetCallbacks(ChirpSDKCallbacks callbacks);
+        ChirpSDKError SetCallbacks(ChirpSDKCallbacks callbacks, void *data);
 
         ChirpSDKError Start();
         ChirpSDKError Stop();

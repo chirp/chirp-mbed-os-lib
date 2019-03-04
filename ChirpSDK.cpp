@@ -33,7 +33,7 @@ ChirpSDKError ChirpSDK::SetConfig(string config)
     return ChirpSDKError(error_code);
 }
 
-ChirpSDKError ChirpSDK::SetCallbacks(ChirpSDKCallbacks callbacks)
+ChirpSDKError ChirpSDK::SetCallbacks(ChirpSDKCallbacks callbacks, void *data)
 {
     chirp_connect_callback_set_t callback_set = { 0 };
     callback_set.on_state_changed = callbacks.on_state_changed;
@@ -45,7 +45,7 @@ ChirpSDKError ChirpSDK::SetCallbacks(ChirpSDKCallbacks callbacks)
 
     if (error_code == CHIRP_CONNECT_OK)
     {
-        error_code = chirp_connect_set_callback_ptr(this->connect, (void *)this);
+        error_code = chirp_connect_set_callback_ptr(this->connect, data);
     }
 
     return ChirpSDKError(error_code);
@@ -79,11 +79,6 @@ float ChirpSDK::GetDurationForPayloadLength(size_t payloadLength)
 uint8_t *ChirpSDK::GetRandomPayload(size_t *length)
 {
     return chirp_connect_random_payload(this->connect, length);
-}
-
-ChirpSDK::~ChirpSDK()
-{
-    del_chirp_connect(&this->connect);
 }
 
 string ChirpSDK::PayloadAsString(uint8_t *payload, size_t length)
@@ -220,6 +215,11 @@ ChirpSDKError ChirpSDK::SetFrequencyCorrection(float correction)
 {
     chirp_connect_error_code_t error_code = chirp_connect_set_frequency_correction(this->connect, correction);
     return ChirpSDKError(error_code);
+}
+
+ChirpSDK::~ChirpSDK()
+{
+    del_chirp_connect(&this->connect);
 }
 
 ChirpSDKError::ChirpSDKError(chirp_connect_error_code_t error_code)
