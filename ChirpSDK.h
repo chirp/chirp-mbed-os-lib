@@ -32,11 +32,11 @@ namespace chirp
     class ChirpSDKCallbacks
     {
     public:
-        ChirpSDKStateCallback on_state_changed;
-        ChirpSDKCallback on_sending;
-        ChirpSDKCallback on_sent;
-        ChirpSDKCallback on_receiving;
-        ChirpSDKCallback on_received;
+        ChirpSDKStateCallback on_state_changed = NULL;
+        ChirpSDKCallback on_sending = NULL;
+        ChirpSDKCallback on_sent = NULL;
+        ChirpSDKCallback on_receiving = NULL;
+        ChirpSDKCallback on_received = NULL;
     };
 
     class ChirpSDK
@@ -80,7 +80,7 @@ namespace chirp
         ChirpSDKError SetAutoMute(bool autoMute);
 
         ChirpSDKError SetFrequencyCorrection(float correction);
-        string GetVersion();
+        static string GetVersion();
 
         string Info;
 
