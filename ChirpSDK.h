@@ -17,6 +17,7 @@
 #ifndef CHIRPSDK_H
 #define CHIRPSDK_H
 
+#include <ostream>
 #include <string>
 
 #include "chirp_connect.h"
