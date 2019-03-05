@@ -1,23 +1,45 @@
-#ifndef CHIRP_CHIRPSDK_H
-#define CHIRP_CHIRPSDK_H
+/**
+ * @file ChirpSDK.h
+ *
+ * @brief C++ wrapper arround the Chirp C SDK for MBED. A full documentation of
+ * the C functions used by this wrapper can be found in the headers located in
+ * the `include` folder or at https://docs.chirp.io/arm/.
+ *
+ *  ASIO CONFIDENTIAL
+ *
+ *  All contents are strictly proprietary, and not for copying, resale,
+ *  or use outside of the agreed license.
+ *
+ *  Copyright © 2011-2019, Asio Ltd.
+ *  All rights reserved.
+ */
+
+#ifndef CHIRPSDK_H
+#define CHIRPSDK_H
 
 #include <string>
 
 #include "chirp_connect.h"
 
+/**
+ * Used to shorten usages of the string class.
+ */
 using namespace std;
 
 namespace chirp
 {
     /**
-     * Typedef of some C types to make them more C++ friendly.
-     * The initials types are located in the chirp_connect_*.h files
+     * Typedef of some Chirp C types to make them more C++ friendly.
+     * The initial types are located in the chirp_connect_*.h files
      */
     typedef chirp_connect_state_t ChirpSDKState;
     typedef chirp_connect_state_callback_t ChirpSDKStateCallback;
     typedef chirp_connect_callback_t ChirpSDKCallback;
     typedef chirp_connect_error_code_t ChirpSDKErrorCode;
 
+    /**
+     * Error code wrapping class.
+     */
     class ChirpSDKError
     {
     public:
@@ -45,7 +67,7 @@ namespace chirp
 
         ChirpSDKError Init(string key, string secret);
         ChirpSDKError SetConfig(string config);
-        ChirpSDKError SetCallbacks(ChirpSDKCallbacks callbacks, void *data);
+        ChirpSDKError SetCallbacks(ChirpSDKCallbacks callbacks, void *userData);
 
         ChirpSDKError Start();
         ChirpSDKError Stop();
@@ -92,4 +114,4 @@ namespace chirp
 
 }
 
-#endif /* !CHIRP_CHIRPSDK_H */
+#endif /* !CHIRPSDK_H */

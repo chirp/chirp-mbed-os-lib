@@ -1,6 +1,18 @@
-//
-// Created by Damien Laidin on 2019-02-26.
-//
+/**
+ * @file ChirpSDK.cpp
+ *
+ * @brief C++ wrapper arround the Chirp C SDK for MBED. A full documentation of
+ * the C functions used by this wrapper can be found in the headers located in
+ * the `include` folder or at https://docs.chirp.io/arm/.
+ *
+ *  ASIO CONFIDENTIAL
+ *
+ *  All contents are strictly proprietary, and not for copying, resale,
+ *  or use outside of the agreed license.
+ *
+ *  Copyright © 2011-2019, Asio Ltd.
+ *  All rights reserved.
+ */
 
 #include "ChirpSDK.h"
 
@@ -33,7 +45,7 @@ ChirpSDKError ChirpSDK::SetConfig(string config)
     return ChirpSDKError(error_code);
 }
 
-ChirpSDKError ChirpSDK::SetCallbacks(ChirpSDKCallbacks callbacks, void *data)
+ChirpSDKError ChirpSDK::SetCallbacks(ChirpSDKCallbacks callbacks, void *userData)
 {
     chirp_connect_callback_set_t callback_set = { 0 };
     callback_set.on_state_changed = callbacks.on_state_changed;
@@ -45,7 +57,7 @@ ChirpSDKError ChirpSDK::SetCallbacks(ChirpSDKCallbacks callbacks, void *data)
 
     if (error_code == CHIRP_CONNECT_OK)
     {
-        error_code = chirp_connect_set_callback_ptr(this->connect, data);
+        error_code = chirp_connect_set_callback_ptr(this->connect, userData);
     }
 
     return ChirpSDKError(error_code);
@@ -68,14 +80,6 @@ float ChirpSDK::GetDurationForPayloadLength(size_t payloadLength)
     return chirp_connect_get_duration_for_payload_length(this->connect, payloadLength);
 }
 
-/**
- * Generate a random payload.
- *
- * @param length 0 to get a random payload of a random length. The value will
- *               then be updated to the length of the payload.
- *               Any other value lower or equal to MaxPayloadLength.
- * @return       A payload filled with random data.
- */
 uint8_t *ChirpSDK::GetRandomPayload(size_t *length)
 {
     return chirp_connect_random_payload(this->connect, length);
