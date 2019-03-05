@@ -18,6 +18,16 @@
 
 using namespace chirp;
 
+ChirpSDK::ChirpSDK()
+        : connect(NULL)
+{
+}
+
+ChirpSDK::~ChirpSDK()
+{
+    del_chirp_connect(&this->connect);
+}
+
 ChirpSDKError ChirpSDK::Init(string key, string secret)
 {
     this->connect = new_chirp_connect(key.c_str(), secret.c_str());
@@ -221,11 +231,6 @@ ChirpSDKError ChirpSDK::SetFrequencyCorrection(float correction)
     return ChirpSDKError(error_code);
 }
 
-ChirpSDK::~ChirpSDK()
-{
-    del_chirp_connect(&this->connect);
-}
-
 ChirpSDKError::ChirpSDKError(chirp_connect_error_code_t error_code)
 {
     this->ErrorCode = error_code;
@@ -234,4 +239,11 @@ ChirpSDKError::ChirpSDKError(chirp_connect_error_code_t error_code)
 std::ostream &ChirpSDKError::operator <<(std::ostream &os)
 {
     return os << string(chirp_connect_error_code_to_string(this->ErrorCode));
+}
+
+ChirpSDKCallbacks::ChirpSDKCallbacks()
+        : on_state_changed(NULL), on_sending(NULL), on_sent(NULL),
+          on_receiving(NULL), on_received(NULL)
+{
+
 }

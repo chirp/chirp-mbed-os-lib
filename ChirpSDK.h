@@ -54,16 +54,21 @@ namespace chirp
     class ChirpSDKCallbacks
     {
     public:
-        ChirpSDKStateCallback on_state_changed = NULL;
-        ChirpSDKCallback on_sending = NULL;
-        ChirpSDKCallback on_sent = NULL;
-        ChirpSDKCallback on_receiving = NULL;
-        ChirpSDKCallback on_received = NULL;
+        ChirpSDKCallbacks();
+
+        ChirpSDKStateCallback on_state_changed;
+        ChirpSDKCallback on_sending;
+        ChirpSDKCallback on_sent;
+        ChirpSDKCallback on_receiving;
+        ChirpSDKCallback on_received;
     };
 
     class ChirpSDK
     {
     public :
+
+        ChirpSDK();
+        ~ChirpSDK();
 
         ChirpSDKError Init(string key, string secret);
         ChirpSDKError SetConfig(string config);
@@ -106,10 +111,8 @@ namespace chirp
 
         string Info;
 
-        ~ChirpSDK();
-
     private:
-        chirp_connect_t *connect = NULL;
+        chirp_connect_t *connect;
     };
 
 }
