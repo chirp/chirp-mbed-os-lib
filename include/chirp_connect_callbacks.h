@@ -9,7 +9,7 @@
  *  All contents are strictly proprietary, and not for copying, resale,
  *  or use outside of the agreed license.
  *
- *  Copyright © 2011-2018, Asio Ltd.
+ *  Copyright © 2011-2019, Asio Ltd.
  *  All rights reserved.
  *
  *----------------------------------------------------------------------------*/
@@ -20,6 +20,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
+#include <stddef.h>
 
 #include "chirp_connect_states.h"
 
@@ -72,4 +75,5 @@ typedef struct {
 #ifdef __cplusplus
 }
 #endif
+
 #endif /* !CHIRP_CONNECT_CALLBACKS_H */

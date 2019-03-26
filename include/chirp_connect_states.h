@@ -9,7 +9,7 @@
  *  All contents are strictly proprietary, and not for copying, resale,
  *  or use outside of the agreed license.
  *
- *  Copyright © 2011-2018, Asio Ltd.
+ *  Copyright © 2011-2019, Asio Ltd.
  *  All rights reserved.
  *
  *----------------------------------------------------------------------------*/
@@ -36,4 +36,5 @@ typedef enum {
 #ifdef __cplusplus
 }
 #endif
+
 #endif /* !CHIRP_CONNECT_STATES_H */

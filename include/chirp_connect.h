@@ -9,7 +9,7 @@
  *  All contents are strictly proprietary, and not for copying, resale,
  *  or use outside of the agreed license.
  *
- *  Copyright © 2011-2018, Asio Ltd.
+ *  Copyright © 2011-2019, Asio Ltd.
  *  All rights reserved.
  *
  *----------------------------------------------------------------------------*/
@@ -24,10 +24,31 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
+/**
+* Mark the function as public. Any attempt to call a function without this
+* marker will fail.
+*/
+#if defined(__WIN32) || defined(_WIN32) || defined(WIN32)
+#define PUBLIC_SYM __declspec(dllexport)
+#else
+#define PUBLIC_SYM __attribute__ ((visibility ("default")))
+#endif
+
+/**
+ * Some symbols are defined by Newlib when building the library with GCC but are
+ * not linked when using ARMCC so we create placeholder symbols to avoid link
+ * errors. This is fine as they are not going to be used anyway with this
+ * toolchain.
+ */
+#if defined(__ARMCOMPILER_VERSION)
+void *_impure_ptr = NULL;
+void *__locale_ctype_ptr = NULL;
+#endif
+
 #include "chirp_connect_callbacks.h"
-#include "chirp_sdk_defines.h"
 #include "chirp_connect_errors.h"
 #include "chirp_connect_states.h"
+#include "chirp_connect_version.h"
 
 /**
  * Typedef exposing the SDK structure to the API.
@@ -447,16 +468,8 @@ PUBLIC_SYM chirp_connect_error_code_t chirp_connect_set_callback_ptr(chirp_conne
  */
 PUBLIC_SYM chirp_connect_error_code_t chirp_connect_set_frequency_correction(chirp_connect_t *connect, float correction);
 
-/**
- * Get the version number of the SDK. This function doesn't rely at all on the
- * SDK creation and can be called at any time.
- *
- * @return The version number of the SDK in the MAJOR.MINOR.PATCH string
- *         representation.
- */
-PUBLIC_SYM const char *chirp_connect_get_version(void);
-
 #ifdef __cplusplus
 }
 #endif
+
 #endif /* !CHIRP_CONNECT_H */

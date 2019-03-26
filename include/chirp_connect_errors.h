@@ -9,7 +9,7 @@
  *  All contents are strictly proprietary, and not for copying, resale,
  *  or use outside of the agreed license.
  *
- *  Copyright © 2011-2018, Asio Ltd.
+ *  Copyright © 2011-2019, Asio Ltd.
  *  All rights reserved.
  *
  *----------------------------------------------------------------------------*/
@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-#include "chirp_sdk_defines.h"
+#include "chirp_connect.h"
 
 /**
  * Various error codes the SDK can return. Note that some of the values don't
@@ -69,13 +69,18 @@ typedef enum {
     CHIRP_CONNECT_INVALID_VOLUME = 99, ///< Volume value is incorrect.
     CHIRP_CONNECT_UNKNOWN_ERROR = 100, ///< The SDK has reported an unknown error.
 
-    CHIRP_CONNECT_NETWORK_ERROR = 105, ///< Network error.
-    CHIRP_CONNECT_NETWORK_NO_NETWORK, ///< Couldn't reach the server, please check your network connection.
-    CHIRP_CONNECT_NETWORK_PERMISSIONS_NOT_GRANTED, ///< Network permissions were not granted by the application or user. Please add network permissions to your application, or contact sales@chirp.io to request completely offline operation.
-
-    CHIRP_CONNECT_ACCOUNT_DISABLED = 110, ///< Your account has been disabled due to an unpaid license. Please contact sales@chirp.io.
-
-    CHIRP_CONNECT_AUDIO_IO = 120, ///< Audio IO error.
+    /*--------------------------------------------------------------------------
+     * Reserved for the high level SDKs. Don't update it but rather add an issue
+     * in the C-SDK.
+     *------------------------------------------------------------------------*/
+    CHIRP_CONNECT_NETWORK_ERROR = 200, ///< "Network error."
+    CHIRP_CONNECT_NETWORK_NO_NETWORK, ///< "Couldn't reach the server, please check your network connection."
+    CHIRP_CONNECT_NETWORK_PERMISSIONS_NOT_GRANTED, ///< "Network permissions were not granted by the application or user. Please add network permissions to your application, or contact sales@chirp.io to request completely offline operation."
+    CHIRP_CONNECT_ACCOUNT_DISABLED, ///< "Your account has been disabled due to an unpaid license. Please contact sales@chirp.io."
+    CHIRP_CONNECT_AUDIO_IO_ERROR, ///< "Audio IO error."
+    CHIRP_CONNECT_SENDING_NOT_ENABLED, ///< "Send mode hasn't been enabled."
+    CHIRP_CONNECT_RECEIVING_NOT_ENABLED, ///< "Receive mode hasn't been enabled."
+    CHIRP_CONNECT_DEVICE_IS_MUTED, ///< "The device is muted. Cannot send data."
 } chirp_connect_error_code_t;
 
 /**
@@ -89,4 +94,5 @@ PUBLIC_SYM const char *chirp_connect_error_code_to_string(chirp_connect_error_co
 #ifdef __cplusplus
 }
 #endif
+
 #endif /* !CHIRP_CONNECT_ERRORS_H */
