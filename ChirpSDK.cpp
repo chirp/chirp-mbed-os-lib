@@ -1,7 +1,7 @@
 /**
  * @file ChirpSDK.cpp
  *
- * @brief C++ wrapper arround the Chirp C SDK for MBED. A full documentation of
+ * @brief C++ wrapper around the Chirp C SDK for MBED. A full documentation of
  * the C functions used by this wrapper can be found in the headers located in
  * the `include` folder or at https://docs.chirp.io/arm/.
  *
@@ -15,6 +15,19 @@
  */
 
 #include "ChirpSDK.h"
+
+/**
+ * Some symbols are defined by Newlib when building the library with GCC but are
+ * not linked when using ARMCC so we create placeholder symbols to avoid link
+ * errors. This is fine as they are not going to be used anyway with this
+ * toolchain.
+ */
+#if defined(__ARMCC_VERSION)
+extern "C" const char *__locale_ctype_ptr (void)
+{
+    return "";
+}
+#endif
 
 using namespace chirp;
 
